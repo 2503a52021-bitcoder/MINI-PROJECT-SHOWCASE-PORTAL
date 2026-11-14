@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Showcase Portal | Hackathon 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <span class="brand-icon">⚡</span>
+        </div>
+        <div class="brand-text">
+          <h2>ShowcaseHub</h2>
+          <span class="brand-tag">Hackathon 2026</span>
+        </div>
+      </div>
+
+      <!-- Current Role Indicator in Sidebar -->
+      <div class="sidebar-role-indicator">
+        <div class="role-pill" id="sidebar-role-pill">
+          <span class="role-dot"></span>
+          <span id="sidebar-role-text">Student View</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Navigation Menu -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <button class="nav-link active" data-target="dashboard" id="nav-dashboard">
+              <span class="nav-icon">📊</span>
+              <span class="nav-label">Dashboard</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="explore" id="nav-explore">
+              <span class="nav-icon">🔍</span>
+              <span class="nav-label">Explore Projects</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="add-project" id="nav-add-project">
+              <span class="nav-icon">➕</span>
+              <span class="nav-label">Add Project</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="my-projects" id="nav-my-projects">
+              <span class="nav-icon">📁</span>
+              <span class="nav-label">My Projects</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="categories" id="nav-categories">
+              <span class="nav-icon">🏷️</span>
+              <span class="nav-label">Categories</span>
+            </button>
+          </li>
+          <!-- Faculty Review: Visible only when Faculty role is active -->
+          <li class="nav-item faculty-only-nav hidden" id="nav-item-faculty">
+            <button class="nav-link" data-target="faculty-review" id="nav-faculty-review">
+              <span class="nav-icon">🎓</span>
+              <span class="nav-label">Faculty Review</span>
+              <span class="nav-badge" id="faculty-pending-badge">0</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="analytics" id="nav-analytics">
+              <span class="nav-icon">📈</span>
+              <span class="nav-label">Analytics</span>
+            </button>
+          </li>
+          <li class="nav-item nav-logout-item">
+            <button class="nav-link nav-logout" id="nav-logout">
+              <span class="nav-icon">🚪</span>
+              <span class="nav-label">Logout</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <p class="footer-note">College Showcase Portal &copy; 2026</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Header / Navbar -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle Sidebar">
+            <span>☰</span>
+          </button>
+          <div class="welcome-box">
+            <h1 class="welcome-title">Welcome to Project Showcase Portal</h1>
+            <p class="welcome-subtitle">Explore, submit, and evaluate collegiate innovation</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Header Search Bar -->
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="global-search-input" placeholder="Search projects, technologies..." autocomplete="off">
+          </div>
+
+          <!-- Role Switcher Button -->
+          <div class="role-switcher-container">
+            <button class="role-switch-btn" id="role-switch-btn" title="Toggle between Student and Faculty role">
+              <span class="switch-icon">🔄</span>
+              <span class="switch-text" id="role-switch-text">Switch to Faculty</span>
+            </button>
+          </div>
+
+          <!-- Notification Dropdown -->
+          <div class="notification-wrapper">
+            <button class="icon-button notification-btn" id="notif-btn" title="Notifications">
+              <span class="notif-icon">🔔</span>
+              <span class="notif-count" id="notif-count">2</span>
+            </button>
+            <div class="notif-dropdown hidden" id="notif-dropdown">
+              <div class="notif-dropdown-header">
+                <h4>Notifications</h4>
+                <button class="clear-notifs-btn" id="clear-notifs-btn">Mark read</button>
+              </div>
+              <ul class="notif-list" id="notif-list">
+                <li class="notif-item">
+                  <span class="notif-bullet success"></span>
+                  <div class="notif-content">
+                    <p class="notif-title">Project Approved!</p>
+                    <span class="notif-time">IoT Smart Home is now live in the gallery</span>
+                  </div>
+                </li>
+                <li class="notif-item">
+                  <span class="notif-bullet warning"></span>
+                  <div class="notif-content">
+                    <p class="notif-title">Submission Under Review</p>
+                    <span class="notif-time">Hospital Management System pending review</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- User Profile -->
+          <div class="user-profile" id="user-profile">
+            <div class="profile-avatar" id="profile-avatar">AM</div>
+            <div class="profile-info">
+              <span class="profile-name" id="profile-name">Aarav Sharma</span>
+              <span class="profile-role" id="profile-role-label">Student</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Dynamic Content Container -->
+      <main class="content-container">
+
+        <!-- 1. DASHBOARD SECTION -->
+        <section class="section-view active" id="dashboard-view">
+          <div class="section-banner">
+            <div class="banner-content">
+              <h2>Student Innovation & Engineering Showcase</h2>
+              <p>Discover high-impact academic solutions, research prototypes, and hackathon projects built by students.</p>
+              <div class="banner-actions">
+                <button class="btn btn-primary" id="dashboard-add-btn">
+                  <span>➕</span> Submit Mini Project
+                </button>
+                <button class="btn btn-secondary" id="dashboard-explore-btn">
+                  <span>🔍</span> Explore Public Gallery
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Statistics Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper navy-accent">
+                <span>📁</span>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Total Projects</span>
+                <h3 class="stat-value" id="stat-total-projects">0</h3>
+                <span class="stat-subtext">Across all categories</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper success-accent">
+                <span>✅</span>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Approved Projects</span>
+                <h3 class="stat-value" id="stat-approved-projects">0</h3>
+                <span class="stat-subtext text-success" id="stat-approval-rate">100% verified</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper warning-accent">
+                <span>⏳</span>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Pending Projects</span>
+                <h3 class="stat-value" id="stat-pending-projects">0</h3>
+                <span class="stat-subtext text-warning">Awaiting review</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper purple-accent">
+                <span>👥</span>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Total Students</span>
+                <h3 class="stat-value" id="stat-total-students">0</h3>
+                <span class="stat-subtext">Active contributors</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Projects Section -->
+          <div class="dashboard-featured-section">
+            <div class="section-header-flex">
+              <div>
+                <h3 class="section-title">Featured Projects</h3>
+                <p class="section-subtitle">Top verified student achievements from recent batches</p>
+              </div>
+              <button class="btn-link" id="view-all-featured-btn">View All Projects →</button>
+            </div>
+
+            <!-- Featured Projects Cards Grid -->
+            <div class="projects-grid" id="featured-projects-grid">
+              <!-- Rendered via script.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. EXPLORE PROJECTS SECTION -->
+        <section class="section-view" id="explore-view">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Explore Projects</h2>
+              <p class="section-subtitle">Discover public, faculty-approved projects across batches and technology stacks</p>
+            </div>
+            <div class="results-counter">
+              <span class="counter-badge" id="explore-counter">Showing 0 Projects</span>
+            </div>
+          </div>
+
+          <!-- Filter and Search Bar -->
+          <div class="filter-card">
+            <div class="filter-grid">
+              <!-- Search by Title -->
+              <div class="filter-field">
+                <label for="filter-title-input">Search Title / Keyword</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">🔍</span>
+                  <input type="text" id="filter-title-input" placeholder="e.g. Chatbot, Food, Agriculture...">
+                </div>
+              </div>
+
+              <!-- Search by Technology -->
+              <div class="filter-field">
+                <label for="filter-tech-input">Search Technology</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">💻</span>
+                  <input type="text" id="filter-tech-input" placeholder="e.g. Python, Node.js, ESP32...">
+                </div>
+              </div>
+
+              <!-- Filter by Category -->
+              <div class="filter-field">
+                <label for="filter-category-select">Filter by Category</label>
+                <select id="filter-category-select">
+                  <option value="ALL">All Categories</option>
+                  <option value="Web">Web Development</option>
+                  <option value="Mobile">Mobile Development</option>
+                  <option value="AI">Artificial Intelligence / ML</option>
+                  <option value="IoT">Internet of Things (IoT)</option>
+                </select>
+              </div>
+
+              <!-- Filter by Batch -->
+              <div class="filter-field">
+                <label for="filter-batch-select">Filter by Batch</label>
+                <select id="filter-batch-select">
+                  <option value="ALL">All Batches</option>
+                  <option value="2021-2025">Batch 2021-2025</option>
+                  <option value="2022-2026">Batch 2022-2026</option>
+                  <option value="2023-2027">Batch 2023-2027</option>
+                  <option value="2024-2028">Batch 2024-2028</option>
+                </select>
+              </div>
+
+              <!-- Filter Actions -->
+              <div class="filter-field filter-buttons">
+                <label>&nbsp;</label>
+                <button class="btn btn-secondary" id="reset-filters-btn">
+                  <span>↺</span> Reset Filters
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projects Display Grid -->
+          <div class="projects-grid" id="explore-projects-grid">
+            <!-- Rendered via script.js -->
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state hidden" id="explore-empty-state">
+            <div class="empty-icon">🔎</div>
+            <h3>No Approved Projects Found</h3>
+            <p>Try adjusting your search criteria, category filters, or batch selection.</p>
+            <button class="btn btn-primary" id="clear-search-btn">Clear All Filters</button>
+          </div>
+        </section>
+
+        <!-- 3. ADD / EDIT PROJECT SECTION -->
+        <section class="section-view" id="add-project-view">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title" id="form-section-title">Submit New Project</h2>
+              <p class="section-subtitle" id="form-section-subtitle">
+                Provide comprehensive project details. All submissions will be reviewed by faculty before public showcase.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-container-card">
+            <!-- Submission Alert Message Box -->
+            <div class="alert-box hidden" id="form-alert"></div>
+
+            <form id="project-form" novalidate>
+              <!-- Hidden ID field for editing -->
+              <input type="hidden" id="form-project-id" value="">
+
+              <div class="form-row two-cols">
+                <!-- Project Title -->
+                <div class="form-group">
+                  <label for="form-title">Project Title <span class="required">*</span></label>
+                  <input type="text" id="form-title" placeholder="e.g. Smart Agriculture Monitoring System" required>
+                  <small class="error-msg" id="error-title"></small>
+                </div>
+
+                <!-- Project Category -->
+                <div class="form-group">
+                  <label for="form-category">Project Category <span class="required">*</span></label>
+                  <select id="form-category" required>
+                    <option value="">Select Category</option>
+                    <option value="Web">Web Development</option>
+                    <option value="Mobile">Mobile Development</option>
+                    <option value="AI">Artificial Intelligence / ML</option>
+                    <option value="IoT">Internet of Things (IoT)</option>
+                  </select>
+                  <small class="error-msg" id="error-category"></small>
+                </div>
+              </div>
+
+              <div class="form-row two-cols">
+                <!-- Batch -->
+                <div class="form-group">
+                  <label for="form-batch">Batch <span class="required">*</span></label>
+                  <select id="form-batch" required>
+                    <option value="">Select Academic Batch</option>
+                    <option value="2021-2025">2021-2025</option>
+                    <option value="2022-2026">2022-2026</option>
+                    <option value="2023-2027">2023-2027</option>
+                    <option value="2024-2028">2024-2028</option>
+                  </select>
+                  <small class="error-msg" id="error-batch"></small>
+                </div>
+
+                <!-- Technologies Used -->
+                <div class="form-group">
+                  <label for="form-technologies">Technologies Used <span class="required">*</span></label>
+                  <input type="text" id="form-technologies" placeholder="Comma-separated, e.g. Python, ESP32, MQTT, React" required>
+                  <small class="field-hint">Separate multiple technologies with commas</small>
+                  <small class="error-msg" id="error-technologies"></small>
+                </div>
+              </div>
+
+              <div class="form-row two-cols">
+                <!-- Team Members -->
+                <div class="form-group">
+                  <label for="form-team">Team Members <span class="required">*</span></label>
+                  <input type="text" id="form-team" placeholder="e.g. Aarav Sharma, Rohan Verma, Priya Patel" required>
+                  <small class="field-hint">List student names separated by commas</small>
+                  <small class="error-msg" id="error-team"></small>
+                </div>
+
+                <!-- GitHub Repository Link -->
+                <div class="form-group">
+                  <label for="form-github">GitHub Repository Link <span class="required">*</span></label>
+                  <input type="url" id="form-github" placeholder="https://github.com/username/repository" required>
+                  <small class="field-hint">Must start with https://github.com/</small>
+                  <small class="error-msg" id="error-github"></small>
+                </div>
+              </div>
+
+              <!-- Project Description -->
+              <div class="form-group">
+                <label for="form-description">Project Description <span class="required">*</span></label>
+                <textarea id="form-description" rows="4" placeholder="Describe the problem solved, methodology, key architecture, and outcomes..." required></textarea>
+                <small class="error-msg" id="error-description"></small>
+              </div>
+
+              <!-- Project Screenshot Upload & Preview -->
+              <div class="form-group">
+                <label>Project Screenshot / Banner</label>
+                <div class="upload-area" id="upload-dropzone">
+                  <input type="file" id="form-screenshot-input" accept="image/*" class="file-input-hidden">
+                  <div class="upload-placeholder" id="upload-placeholder">
+                    <span class="upload-icon">📷</span>
+                    <p class="upload-prompt">Click to browse or drop screenshot here</p>
+                    <span class="upload-sub">Supports PNG, JPG, WEBP (Max 3MB)</span>
+                  </div>
+                </div>
+
+                <!-- Screenshot Live Preview Container -->
+                <div class="screenshot-preview-wrapper hidden" id="preview-wrapper">
+                  <div class="preview-header">
+                    <span class="preview-title">Screenshot Preview:</span>
+                    <button type="button" class="btn-remove-preview" id="btn-remove-preview">✕ Remove Image</button>
+                  </div>
+                  <div class="preview-image-box">
+                    <img id="screenshot-preview-img" src="" alt="Project Screenshot Preview">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Buttons -->
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="btn-submit-project">
+                  <span id="btn-submit-icon">🚀</span>
+                  <span id="btn-submit-label">Submit Project</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-form">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- 4. MY PROJECTS SECTION (Student Dashboard) -->
+        <section class="section-view" id="my-projects-view">
+          <div class="section-header-flex">
+            <div>
+              <h2 class="section-title">My Projects</h2>
+              <p class="section-subtitle">Track your project submissions, approval status, and manage active records</p>
+            </div>
+            <button class="btn btn-primary" id="myprojects-add-btn">
+              <span>➕</span> Add New Project
+            </button>
+          </div>
+
+          <!-- Status Filter Tabs for Student -->
+          <div class="status-tabs-container">
+            <button class="status-tab active" data-status="ALL">All Projects (<span id="tab-count-all">0</span>)</button>
+            <button class="status-tab" data-status="Pending">Pending Review (<span id="tab-count-pending">0</span>)</button>
+            <button class="status-tab" data-status="Approved">Approved (<span id="tab-count-approved">0</span>)</button>
+            <button class="status-tab" data-status="Rejected">Rejected (<span id="tab-count-rejected">0</span>)</button>
+          </div>
+
+          <!-- Student Projects Grid -->
+          <div class="projects-grid" id="my-projects-grid">
+            <!-- Rendered via script.js -->
+          </div>
+
+          <!-- Student Empty State -->
+          <div class="empty-state hidden" id="my-projects-empty">
+            <div class="empty-icon">📁</div>
+            <h3>No Projects in this view</h3>
+            <p>You have not submitted any projects matching this filter yet.</p>
+            <button class="btn btn-primary" id="empty-add-project-btn">Submit a Project Now</button>
+          </div>
+        </section>
+
+        <!-- 5. CATEGORIES SECTION -->
+        <section class="section-view" id="categories-view">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Project Categories</h2>
+              <p class="section-subtitle">Browse student initiatives categorized by engineering domain and core technologies</p>
+            </div>
+          </div>
+
+          <div class="categories-grid">
+            <!-- Web Category Card -->
+            <div class="category-card" data-category="Web">
+              <div class="category-header web-theme">
+                <span class="category-icon">🌐</span>
+                <span class="category-count" id="cat-count-web">0 Projects</span>
+              </div>
+              <div class="category-body">
+                <h3>Web Development</h3>
+                <p>Full-stack platforms, progressive web apps, microservices, and reactive user interfaces.</p>
+                <div class="category-tags">
+                  <span>Node.js</span>
+                  <span>PHP</span>
+                  <span>MongoDB</span>
+                  <span>JavaScript</span>
+                </div>
+                <button class="btn btn-secondary btn-full cat-explore-btn" data-category="Web">
+                  Explore Web Projects →
+                </button>
+              </div>
+            </div>
+
+            <!-- Mobile Category Card -->
+            <div class="category-card" data-category="Mobile">
+              <div class="category-header mobile-theme">
+                <span class="category-icon">📱</span>
+                <span class="category-count" id="cat-count-mobile">0 Projects</span>
+              </div>
+              <div class="category-body">
+                <h3>Mobile Development</h3>
+                <p>Native Android, iOS, cross-platform applications, and responsive offline-first tools.</p>
+                <div class="category-tags">
+                  <span>Flutter</span>
+                  <span>React Native</span>
+                  <span>Kotlin</span>
+                  <span>Swift</span>
+                </div>
+                <button class="btn btn-secondary btn-full cat-explore-btn" data-category="Mobile">
+                  Explore Mobile Projects →
+                </button>
+              </div>
+            </div>
+
+            <!-- AI Category Card -->
+            <div class="category-card" data-category="AI">
+              <div class="category-header ai-theme">
+                <span class="category-icon">🤖</span>
+                <span class="category-count" id="cat-count-ai">0 Projects</span>
+              </div>
+              <div class="category-body">
+                <h3>Artificial Intelligence & ML</h3>
+                <p>Natural language processing, predictive data modeling, computer vision, and neural pipelines.</p>
+                <div class="category-tags">
+                  <span>Python</span>
+                  <span>PyTorch</span>
+                  <span>NLP</span>
+                  <span>Scikit-Learn</span>
+                </div>
+                <button class="btn btn-secondary btn-full cat-explore-btn" data-category="AI">
+                  Explore AI Projects →
+                </button>
+              </div>
+            </div>
+
+            <!-- IoT Category Card -->
+            <div class="category-card" data-category="IoT">
+              <div class="category-header iot-theme">
+                <span class="category-icon">📡</span>
+                <span class="category-count" id="cat-count-iot">0 Projects</span>
+              </div>
+              <div class="category-body">
+                <h3>Internet of Things (IoT)</h3>
+                <p>Embedded sensors, microcontrollers, smart automation, robotics, and edge telemetry.</p>
+                <div class="category-tags">
+                  <span>Arduino</span>
+                  <span>ESP32</span>
+                  <span>Raspberry Pi</span>
+                  <span>MQTT</span>
+                </div>
+                <button class="btn btn-secondary btn-full cat-explore-btn" data-category="IoT">
+                  Explore IoT Projects →
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. FACULTY REVIEW SECTION (Faculty Only) -->
+        <section class="section-view" id="faculty-review-view">
+          <div class="section-header">
+            <div>
+              <div class="faculty-badge-row">
+                <span class="badge badge-purple">Faculty Evaluation Panel</span>
+              </div>
+              <h2 class="section-title">Faculty Review & Verification</h2>
+              <p class="section-subtitle">
+                Review submitted projects, inspect code repositories, evaluate technical complexity, and approve or reject submissions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Faculty Quick Stat Bar -->
+          <div class="faculty-stat-strip">
+            <div class="faculty-mini-stat">
+              <span class="fms-num text-warning" id="faculty-stat-pending">0</span>
+              <span class="fms-text">Awaiting Review</span>
+            </div>
+            <div class="faculty-mini-stat">
+              <span class="fms-num text-success" id="faculty-stat-approved">0</span>
+              <span class="fms-text">Approved & Published</span>
+            </div>
+            <div class="faculty-mini-stat">
+              <span class="fms-num text-danger" id="faculty-stat-rejected">0</span>
+              <span class="fms-text">Rejected / Needs Revision</span>
+            </div>
+          </div>
+
+          <!-- Faculty Filter Tabs -->
+          <div class="status-tabs-container">
+            <button class="faculty-filter-tab active" data-filter="Pending">Pending Review</button>
+            <button class="faculty-filter-tab" data-filter="Approved">Approved Submissions</button>
+            <button class="faculty-filter-tab" data-filter="Rejected">Rejected Submissions</button>
+            <button class="faculty-filter-tab" data-filter="ALL">All Submissions</button>
+          </div>
+
+          <!-- Faculty Submissions Table / Cards -->
+          <div class="faculty-cards-list" id="faculty-submissions-list">
+            <!-- Rendered via script.js -->
+          </div>
+
+          <div class="empty-state hidden" id="faculty-empty-state">
+            <div class="empty-icon">✅</div>
+            <h3>All Caught Up!</h3>
+            <p>No project submissions currently require faculty action for this view.</p>
+          </div>
+        </section>
+
+        <!-- 7. ANALYTICS DASHBOARD SECTION -->
+        <section class="section-view" id="analytics-view">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Showcase Analytics</h2>
+              <p class="section-subtitle">Real-time statistics, category distributions, and batch-wise engagement metrics</p>
+            </div>
+          </div>
+
+          <div class="analytics-grid">
+            <!-- Card 1: Projects by Category -->
+            <div class="analytics-card">
+              <div class="card-head">
+                <h4>Total Projects by Category</h4>
+                <span class="card-badge">Domain Distribution</span>
+              </div>
+              <div class="card-chart-content" id="analytics-category-bars">
+                <!-- CSS progress bars rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Card 2: Approval Status Ratio -->
+            <div class="analytics-card">
+              <div class="card-head">
+                <h4>Approval Status Breakdown</h4>
+                <span class="card-badge">Verification Progress</span>
+              </div>
+              <div class="card-chart-content" id="analytics-status-bars">
+                <!-- CSS progress bars rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Card 3: Batch-Wise Distribution -->
+            <div class="analytics-card">
+              <div class="card-head">
+                <h4>Batch-Wise Project Submissions</h4>
+                <span class="card-badge">Academic Cohorts</span>
+              </div>
+              <div class="card-chart-content" id="analytics-batch-bars">
+                <!-- CSS progress bars rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Card 4: Top Technologies Stack -->
+            <div class="analytics-card">
+              <div class="card-head">
+                <h4>Most Popular Technologies</h4>
+                <span class="card-badge">Tech Frequency</span>
+              </div>
+              <div class="tech-cloud-container" id="analytics-top-tech">
+                <!-- Tech badges rendered dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- PROJECT DETAILS MODAL -->
+  <div class="modal-overlay hidden" id="project-modal-overlay">
+    <div class="modal-box" id="project-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="badge" id="modal-category-badge">Category</span>
+          <span class="badge" id="modal-status-badge">Status</span>
+          <h2 id="modal-project-title">Project Title</h2>
+        </div>
+        <button class="modal-close-btn" id="modal-close-btn" title="Close Modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Thumbnail / Screenshot -->
+        <div class="modal-media-box" id="modal-media-box">
+          <img id="modal-screenshot-img" src="" alt="Project Image" class="modal-image hidden">
+          <div id="modal-fallback-thumbnail" class="modal-thumbnail-fallback">
+            <span class="fallback-icon">💻</span>
+            <span id="modal-fallback-category">Engineering Project</span>
+          </div>
+        </div>
+
+        <!-- Meta Details Row -->
+        <div class="modal-meta-row">
+          <div class="modal-meta-item">
+            <span class="meta-label">Submitted By</span>
+            <span class="meta-value" id="modal-student-name">Student Name</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="meta-label">Academic Batch</span>
+            <span class="meta-value" id="modal-batch">Batch</span>
+          </div>
+          <div class="modal-meta-item">
+            <span class="meta-label">Team Members</span>
+            <span class="meta-value" id="modal-team-members">Team Members</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="modal-section">
+          <h4 class="modal-subhead">Project Overview</h4>
+          <p class="modal-description-text" id="modal-description">Description content</p>
+        </div>
+
+        <!-- Technologies -->
+        <div class="modal-section">
+          <h4 class="modal-subhead">Technologies Used</h4>
+          <div class="modal-tech-tags" id="modal-tech-tags"></div>
+        </div>
+
+        <!-- GitHub and Links -->
+        <div class="modal-section">
+          <h4 class="modal-subhead">Source Code Repository</h4>
+          <div class="github-link-row">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-github" id="modal-github-link">
+              <span class="github-icon">🔗</span> Open GitHub Repository ↗
+            </a>
+            <span class="github-url-text" id="modal-github-url">https://github.com/...</span>
+          </div>
+        </div>
+
+        <!-- Faculty Quick Action Row in Modal (Visible only if faculty) -->
+        <div class="modal-faculty-actions hidden" id="modal-faculty-actions">
+          <h4 class="modal-subhead">Faculty Evaluation</h4>
+          <div class="action-buttons-group">
+            <button class="btn btn-success" id="modal-approve-btn">
+              <span>✅</span> Approve Project
+            </button>
+            <button class="btn btn-danger" id="modal-reject-btn">
+              <span>❌</span> Reject Project
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="modal-footer-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION MODAL (LOGIN / REGISTER) -->
+  <div class="modal-overlay hidden" id="auth-modal-overlay">
+    <div class="modal-box auth-modal-box" id="auth-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="badge badge-purple" id="auth-role-badge">Authentication</span>
+          <h2 id="auth-modal-title">Sign In to ShowcaseHub</h2>
+        </div>
+        <button class="modal-close-btn" id="auth-modal-close-btn" title="Close Modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Auth Role Toggle Tabs -->
+        <div class="status-tabs-container auth-tabs">
+          <button class="status-tab active" id="auth-tab-student" type="button">👨‍🎓 Student Portal</button>
+          <button class="status-tab" id="auth-tab-faculty" type="button">🎓 Faculty Evaluator</button>
+        </div>
+
+        <!-- Alert in Auth Modal -->
+        <div class="alert-box hidden" id="auth-alert"></div>
+
+        <!-- Student Form Container -->
+        <div id="student-auth-container">
+          <div class="auth-toggle-row">
+            <span id="auth-mode-text">Already registered?</span>
+            <button type="button" class="btn-link" id="btn-toggle-auth-mode">Create an Account</button>
+          </div>
+
+          <!-- Student Login / Register Form -->
+          <form id="student-auth-form" novalidate>
+            <!-- Name (Only in Register mode) -->
+            <div class="form-group hidden" id="group-auth-name">
+              <label for="auth-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="auth-name" placeholder="e.g. Aarav Sharma">
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="auth-email">Student Email <span class="required">*</span></label>
+              <input type="email" id="auth-email" placeholder="e.g. student@showcase.edu" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="auth-password">Password <span class="required">*</span></label>
+              <input type="password" id="auth-password" placeholder="At least 6 characters" required>
+            </div>
+
+            <!-- Batch (Only in Register mode) -->
+            <div class="form-group hidden" id="group-auth-batch">
+              <label for="auth-batch">Academic Batch <span class="required">*</span></label>
+              <select id="auth-batch">
+                <option value="2021-2025">Batch 2021-2025</option>
+                <option value="2022-2026">Batch 2022-2026</option>
+                <option value="2023-2027" selected>Batch 2023-2027</option>
+                <option value="2024-2028">Batch 2024-2028</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-full" id="btn-auth-submit">
+                <span>🔑</span> <span id="btn-auth-submit-label">Sign In as Student</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Quick Demo Buttons -->
+          <div class="demo-auth-box">
+            <span class="field-hint">Hackathon Quick Test:</span>
+            <button type="button" class="btn btn-secondary btn-full btn-sm" id="btn-quick-student">
+              ⚡ Quick Login: Student (student@showcase.edu)
+            </button>
+          </div>
+        </div>
+
+        <!-- Faculty Form Container -->
+        <div id="faculty-auth-container" class="hidden">
+          <p class="field-hint" style="margin-bottom: 14px;">
+            Faculty Evaluator access is restricted to verified campus instructors and hackathon evaluators.
+          </p>
+
+          <form id="faculty-auth-form" novalidate>
+            <div class="form-group">
+              <label for="faculty-auth-email">Faculty Email <span class="required">*</span></label>
+              <input type="email" id="faculty-auth-email" placeholder="faculty@showcase.edu" required>
+            </div>
+
+            <div class="form-group">
+              <label for="faculty-auth-password">Password <span class="required">*</span></label>
+              <input type="password" id="faculty-auth-password" placeholder="Enter faculty password" required>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-full" id="btn-faculty-submit">
+                <span>🎓</span> Sign In as Faculty Evaluator
+              </button>
+            </div>
+          </form>
+
+          <!-- Quick Demo Faculty Button -->
+          <div class="demo-auth-box">
+            <span class="field-hint">Hackathon Quick Test:</span>
+            <button type="button" class="btn btn-secondary btn-full btn-sm" id="btn-quick-faculty">
+              ⚡ Quick Login: Faculty (faculty@showcase.edu)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="auth-modal-footer-close">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript Link -->
+  <script src="script.js"></script>
+</body>
+</html>

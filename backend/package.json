@@ -1,0 +1,28 @@
+{
+  "name": "mini-project-showcase-backend",
+  "version": "1.0.0",
+  "description": "Node.js and Express.js Backend with Official MongoDB Driver for Mini Project Showcase Portal - Hackathon 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "hackathon2026",
+    "showcase"
+  ],
+  "author": "Hackathon 2026 Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.8.0",
+    "multer": "^1.4.5-lts.1"
+  }
+}
