@@ -7,9 +7,9 @@
  */
 
 // 1. API CONFIGURATION
-const API_BASE_URL = (window.location.port === '5000')
-  ? ''
-  : 'http://localhost:5000';
+const API_BASE_URL = window.location.protocol === 'file:'
+  ? 'http://localhost:5000'
+  : '';
 
 const AUTH_TOKEN_KEY = 'showcase_auth_token';
 const AUTH_USER_KEY = 'showcase_auth_user';

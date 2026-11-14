@@ -18,9 +18,19 @@ const crypto = require('crypto');
 const { ObjectId } = require('mongodb');
 
 const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is required. See backend/.env.example.');
+
+function requireJwtSecret(req, res, next) {
+  if (!JWT_SECRET) {
+    console.error('[Auth] JWT_SECRET is not configured.');
+    return res.status(503).json({
+      success: false,
+      message: 'Authentication is unavailable. Configure the JWT_SECRET environment variable.'
+    });
+  }
+  next();
 }
+
+router.use(requireJwtSecret);
 
 // Helper to convert string to ObjectId safely
 function toObjectId(id) {
@@ -36,6 +46,14 @@ function toObjectId(id) {
 // --------------------------------------------------------------------------
 
 function verifyToken(req, res, next) {
+  if (!JWT_SECRET) {
+    console.error('[Auth] JWT_SECRET is not configured.');
+    return res.status(503).json({
+      success: false,
+      message: 'Authentication is unavailable. Configure the JWT_SECRET environment variable.'
+    });
+  }
+
   const authHeader = req.headers['authorization'] || req.headers['Authorization'];
   if (!authHeader) {
     return res.status(401).json({ success: false, message: 'Access denied. No authorization token provided.' });

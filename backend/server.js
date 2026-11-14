@@ -24,6 +24,7 @@ const DB_NAME = process.env.DB_NAME || 'mini_project_showcase';
 
 let client = null;
 let db = null;
+let dbConnectionPromise = null;
 
 // --------------------------------------------------------------------------
 // MIDDLEWARE CONFIGURATION
@@ -41,7 +42,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Static file serving: Uploaded screenshots
-const uploadsPath = path.join(__dirname, 'uploads');
+const uploadsPath = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadsPath));
 
 // Static file serving: Frontend application from frontend folder
@@ -165,19 +168,37 @@ app.use((err, req, res, next) => {
 // DATABASE CONNECTION & SERVER STARTUP
 // --------------------------------------------------------------------------
 
-async function startServer() {
-  try {
-    console.log(`[MongoDB] Connecting to ${MONGODB_URI}...`);
+async function connectToDatabase() {
+  if (db) return db;
+  if (process.env.VERCEL && !process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI must be configured in Vercel environment variables.');
+  }
+  if (!dbConnectionPromise) {
+    console.log('[MongoDB] Connecting to the configured database...');
     client = new MongoClient(MONGODB_URI, {
       maxPoolSize: 20,
       serverSelectionTimeoutMS: 5000
     });
 
-    await client.connect();
-    db = client.db(DB_NAME);
-    app.locals.db = db;
-    console.log(`[MongoDB] Successfully connected to database: "${DB_NAME}"`);
+    dbConnectionPromise = client.connect().then(async () => {
+      db = client.db(DB_NAME);
+      app.locals.db = db;
+      await db.command({ ping: 1 });
+      console.log(`[MongoDB] Successfully connected to database: "${DB_NAME}"`);
+      return db;
+    }).catch((err) => {
+      dbConnectionPromise = null;
+      client = null;
+      throw err;
+    });
+  }
 
+  return dbConnectionPromise;
+}
+
+async function startServer() {
+  try {
+    await connectToDatabase();
     // Verify existing collections
     const collections = await db.listCollections().toArray();
     const colNames = collections.map(c => c.name);
@@ -194,11 +215,13 @@ async function startServer() {
     });
   } catch (err) {
     console.error('[MongoDB Connection Failed]:', err.message);
-    console.error('Please ensure MongoDB is running at', MONGODB_URI);
+    console.error('Check that MONGODB_URI is configured and the database is reachable.');
     process.exit(1);
   }
 }
 
-startServer();
+if (require.main === module) {
+  startServer();
+}
 
-module.exports = { app };
+module.exports = { app, connectToDatabase };
